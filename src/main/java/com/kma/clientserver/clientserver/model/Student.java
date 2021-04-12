@@ -22,14 +22,14 @@ public class Student {
     @OneToMany
     @JoinColumn(name = "id_student")
     private List<Enrollment> enrollments;
-//
-//    public List<Enrollment> getEnrollments() {
-//        return enrollments;
-//    }
-//
-//    public void setEnrollments(List<Enrollment> enrollments) {
-//        this.enrollments = enrollments;
-//    }
+
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
 
     public Integer getId() {
         return id;

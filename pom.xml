@@ -13,9 +13,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>clientserver</name>
 	<description>Client-Server Project For Java Course</description>
+
 	<properties>
 		<java.version>16</java.version>
+		<start-class>com.kma.clientserver.clientserver.ClientserverApplication</start-class>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

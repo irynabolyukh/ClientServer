@@ -1,6 +1,8 @@
 package com.kma.clientserver.clientserver.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -19,7 +21,8 @@ public class Student {
     @Column
     private Integer course;
 
-    @OneToMany
+    @JsonManagedReference
+    @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "id_student")
     private List<Enrollment> enrollments;
 

@@ -1,5 +1,9 @@
 package com.kma.clientserver.clientserver.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,10 +15,12 @@ public class Enrollment {
     @Column
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_discipline")
+    @Fetch(FetchMode.JOIN)
     private Disciplines discipline;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "id_student")
     private Student student;

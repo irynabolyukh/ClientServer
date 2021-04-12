@@ -23,6 +23,6 @@ public class DisciplinesServiceImpl implements DisciplinesService {
     @Transactional
     @Override
     public Disciplines get(int id) {
-        return null;
+        return disciplinesDAO.get(id);
     }
 }

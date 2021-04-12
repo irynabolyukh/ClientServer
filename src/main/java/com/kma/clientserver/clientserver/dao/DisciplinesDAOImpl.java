@@ -24,6 +24,7 @@ public class DisciplinesDAOImpl implements DisciplinesDAO {
 
     @Override
     public Disciplines get(int id) {
-        return null;
+        Session currentSession = entityManager.unwrap(Session.class);
+        return currentSession.get(Disciplines.class, id);
     }
 }

@@ -1,5 +1,7 @@
 package com.kma.clientserver.clientserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 import javax.persistence.*;
 
@@ -13,12 +15,13 @@ public class Disciplines {
     private Integer id;
 
     @Column
-    private Integer dname;
+    private String dname;
 
     @Column
     private Integer credits;
 
-    @OneToMany
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_discipline")
     private List<Enrollment> enrollments;
 
@@ -38,11 +41,11 @@ public class Disciplines {
         this.id = id;
     }
 
-    public Integer getDname() {
+    public String getDname() {
         return dname;
     }
 
-    public void setDname(Integer dname) {
+    public void setDname(String dname) {
         this.dname = dname;
     }
 

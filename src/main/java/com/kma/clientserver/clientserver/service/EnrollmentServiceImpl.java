@@ -23,6 +23,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Transactional
     @Override
     public Enrollment get(int id) {
-        return null;
+        return enrollmentDAO.get(id);
     }
 }

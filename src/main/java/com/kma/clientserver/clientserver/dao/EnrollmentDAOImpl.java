@@ -24,6 +24,7 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 
     @Override
     public Enrollment get(int id) {
-        return null;
+        Session currentSession = entityManager.unwrap(Session.class);
+        return currentSession.get(Enrollment.class, id);
     }
 }

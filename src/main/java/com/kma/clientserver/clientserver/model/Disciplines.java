@@ -18,8 +18,9 @@ public class Disciplines {
     @Column
     private Integer credits;
 
-//    @OneToMany(mappedBy = "table_disciplines")
-//    private List<Enrollment> enrollments;
+    @OneToMany
+    @JoinColumn(name = "id_discipline")
+    private List<Enrollment> enrollments;
 
 //    public List<Enrollment> getEnrollments() {
 //        return enrollments;

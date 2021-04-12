@@ -18,9 +18,10 @@ public class Student {
 
     @Column
     private Integer course;
-//
-//    @OneToMany(mappedBy = "table_student")
-//    private List<Enrollment> enrollments;
+
+    @OneToMany
+    @JoinColumn(name = "id_student")
+    private List<Enrollment> enrollments;
 //
 //    public List<Enrollment> getEnrollments() {
 //        return enrollments;

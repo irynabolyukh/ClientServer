@@ -15,13 +15,15 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping("/students")
+    @ResponseBody
     public List<Student> get(){
         return studentService.get();
     }
 
-    @PostMapping("/students/{id}")
-    public Student get(@PathVariable(name = "id") String id) {
-        Student studentObj = studentService.get(Integer.parseInt(id));
+    @GetMapping("/students/{id}")
+    @ResponseBody
+    public Student get(@PathVariable int id) {
+        Student studentObj = studentService.get(id);
         if(studentObj == null) {
             throw new RuntimeException("Student not found for the Id:"+id);
         }

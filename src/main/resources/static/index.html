@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Server</title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<div>
+    <h4>Students List:</h4>
+    <table>
+        <thead>
+        <th>id</th>
+        <th>fio</th>
+        <th>course</th>
+        </thead>
+        <tbody id="studentsList">
+        </tbody>
+    </table>
+</div>
+<div>
+    <h4>Get more info about student</h4>
+    <form id="getStudent" method="post">
+        <label for="studentId">Student id:</label>
+        <input type="text" id="studentId" name="studentId">
+        <button type="submit">Get</button>
+    </form>
+</div>
+<div id="student">
+    <div id="studentInfo">
+    </div>
+    <div>
+        <table>
+            <thead>
+            <th>discipline</th>
+            <th>credits</th>
+            <th>grade</th>
+            </thead>
+            <tbody id="disciplinesList">
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $('#student').hide();
+</script>
+<script>
+    $(document).ready(
+        () => {
+            loadStudents();
+            $('#getStudent').submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/students/' + $(this).find('[name=studentId]').val(),
+                    dataType: 'json',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                    },
+                    success: function (response) {
+                        studentInfo(response);
+                    }
+                })
+            });
+
+        }
+    );
+
+    function studentInfo(data) {
+        let $studentInfo = $('#studentInfo');
+        let $disciplinesList = $('#disciplinesList');
+
+        $('#student').show();
+        $studentInfo.empty();
+        $disciplinesList.empty();
+
+        $studentInfo.append(`<h4>fio: ` + data.fio + `</h4>`);
+        $studentInfo.append(`<h4>course: ` + data.course + `</h4>`);
+
+        data.enrollments.forEach(en => {
+            $disciplinesList.append('<tr><td>'
+                + en.discipline.name + '</td><td>' + en.discipline.credits + '</td>' +
+                '<td>' + en.grade + '</td></tr>')
+        })
+    }
+
+    function loadStudents() {
+        $.ajax({
+            url: '/api/students',
+            success: (response) => (setStudentList(response))
+        })
+    }
+
+
+    function setStudentList(data) {
+
+        let $students = $('#studentsList');
+
+        $students.empty();
+
+        data.forEach(student => {
+            $students.append('<tr><td>' + student.id + '</td><td>' + student.fio + '</td><td>'
+                + student.course + '</td></tr>')
+        })
+
+    }
+</script>
+</body>
+</html>

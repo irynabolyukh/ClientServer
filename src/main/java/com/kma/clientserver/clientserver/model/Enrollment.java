@@ -62,11 +62,11 @@ public class Enrollment {
 
     @Override
     public String toString() {
-        return "Enrollment{" +
-                "id=" + id +
-                ", discipline=" + discipline +
-                ", student=" + student +
-                ", grade=" + grade +
+        return "{" +
+                "\"id\":" + id +
+                ", \"discipline\":" + discipline +
+                ", \"student\":" + student +
+                ", \"grade\":" + grade +
                 '}';
     }
 }

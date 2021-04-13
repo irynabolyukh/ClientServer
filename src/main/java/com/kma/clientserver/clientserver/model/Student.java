@@ -60,10 +60,10 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", fio='" + fio + '\'' +
-                ", course=" + course +
+        return "{" +
+                "\"id\":" + id +
+                ", \"fio\":\"" + fio + '\"' +
+                ", \"course\":" + course +
                 '}';
     }
 }

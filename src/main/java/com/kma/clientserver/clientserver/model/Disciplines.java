@@ -59,10 +59,10 @@ public class Disciplines {
 
     @Override
     public String toString() {
-        return "Disciplines{" +
-                "id=" + id +
-                ", dname=" + dname +
-                ", credits=" + credits +
+        return "{" +
+                " \"id\":" + id +
+                ", \"dname\":\"" + dname +
+                "\", \"credits\":" + credits +
                 '}';
     }
 }

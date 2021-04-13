@@ -1,6 +1,8 @@
 package com.kma.clientserver.clientserver.config;
 
+import com.kma.clientserver.clientserver.model.Enrollment;
 import com.kma.clientserver.clientserver.model.Student;
+import com.kma.clientserver.clientserver.service.EnrollmentService;
 import com.kma.clientserver.clientserver.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +22,9 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Autowired
 	private StudentService studentService;
 
+    @Autowired
+    private EnrollmentService enrollmentService;
+
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
         webSocketHandlerRegistry.addHandler(new StudentHandler(),"/studentsConnection");
@@ -32,17 +37,29 @@ public class WebSocketConfig implements WebSocketConfigurer {
         public void afterConnectionEstablished(WebSocketSession session) throws Exception{
             List<Student> studentList = studentService.get();
             StringBuilder answer = new StringBuilder();
+            answer.append("[");
             for(Student s: studentList){
                 answer.append(s.toString());
+                answer.append(",");
             }
+            answer.deleteCharAt((answer.length()-1));
+            answer.append("]");
             session.sendMessage(new TextMessage(answer.toString()));
         }
 
         @Override
         public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
-            var studentId = message.getPayload();
-            Student student = studentService.get(Integer.parseInt(studentId));
-            session.sendMessage(new TextMessage(student.toString()));
+            int studentId = Integer.parseInt(message.getPayload());
+            List<Enrollment> enrollments = enrollmentService.getForStudent(studentId);
+            StringBuilder answer = new StringBuilder();
+            answer.append("[");
+            for(Enrollment e: enrollments){
+                answer.append(e.toString());
+                answer.append(",");
+            }
+            answer.deleteCharAt((answer.length()-1));
+            answer.append("]");
+            session.sendMessage(new TextMessage(answer));
         }
     }
 }

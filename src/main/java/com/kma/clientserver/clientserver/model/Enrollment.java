@@ -1,31 +1,13 @@
 package com.kma.clientserver.clientserver.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import javax.persistence.*;
-
-@Entity
-@Table(name = "table_enrollment")
 public class Enrollment {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_discipline")
-    @Fetch(FetchMode.JOIN)
     private Disciplines discipline;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "id_student")
     private Student student;
 
-    @Column
     private Double grade;
 
     public Integer getId() {

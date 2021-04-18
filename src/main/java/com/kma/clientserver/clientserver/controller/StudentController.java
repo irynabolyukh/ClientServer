@@ -1,5 +1,6 @@
 package com.kma.clientserver.clientserver.controller;
 
+import com.kma.clientserver.clientserver.model.Enrollment;
 import com.kma.clientserver.clientserver.model.Student;
 import com.kma.clientserver.clientserver.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,15 @@ public class StudentController {
             throw new RuntimeException("Student not found for the Id:"+id);
         }
         return studentObj;
+    }
+
+    @GetMapping("/students/enrollments/{id}")
+    @ResponseBody
+    public List<Enrollment> getEnrollmentsForStudent(@PathVariable int id) {
+        List<Enrollment> enrollments = studentService.getEnrollmentsForStudent(id);
+        if(enrollments == null) {
+            throw new RuntimeException("Enrollments were not found!");
+        }
+        return enrollments;
     }
 }

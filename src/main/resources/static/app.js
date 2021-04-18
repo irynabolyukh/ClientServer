@@ -3,26 +3,31 @@ ws = new WebSocket("ws://localhost:8080/studentsConnection");
 ws.onopen = function (ev){}
 
 ws.onmessage = function (ev){
+    let jsonArray = JSON.parse(ev.data);
+    console.log(jsonArray);
     try{
-        let jsonArray = JSON.parse(ev.data);
         if(jsonArray[0].hasOwnProperty('fio')){
             displayStudents(jsonArray);
         }
-        else{
+        if(jsonArray[0].hasOwnProperty('discipline')){
             displayEnrollments(jsonArray);
         }
     }
     catch{
-        $('#studentTableInfo').hide();
-        let $studentInfo = $('#studentInfo');
-        $studentInfo.empty();
-        $studentInfo.append(`<h3>This Student does not exist!</h3>`);
+        displayError(jsonArray);
     }
 
 }
 
 ws.onerror = function (ev){}
 ws.onclose = function (ev){}
+
+function displayError(message){
+    $('#studentTableInfo').hide();
+    let $studentInfo = $('#studentInfo');
+    $studentInfo.empty();
+    $studentInfo.append(`<h3>` + message.message + `</h3>`);
+}
 
 function displayStudents(message){
     let $output = $('#students');
@@ -33,12 +38,14 @@ function displayStudents(message){
 }
 
 function displayEnrollments(jsonArray){
+    $('#studentTableInfo').show();
     let $studentInfo = $('#studentInfo');
     let $disciplines = $('#disciplines');
     let $disciplineHead = $('#disciplinesHead');
 
     let studentObj = jsonArray[0].student;
 
+    $disciplineHead.empty();
     $studentInfo.empty();
     $disciplines.empty();
 
@@ -54,7 +61,8 @@ function displayEnrollments(jsonArray){
 function getInfo(){
     let message = document.getElementById('message').value;
     if(Number.isInteger(parseInt(message))){
-        let studentId = Math.abs(parseInt(message))
+        let studentId = Math.abs(parseInt(message));
+        console.log(studentId);
         ws.send(studentId);
     }
     else {

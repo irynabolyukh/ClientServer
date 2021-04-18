@@ -1,6 +1,7 @@
 package com.kma.clientserver.clientserver.service;
 
 import com.kma.clientserver.clientserver.dao.StudentDAO;
+import com.kma.clientserver.clientserver.model.Enrollment;
 import com.kma.clientserver.clientserver.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student get(int id) {
         return studentDAO.get(id);
+    }
+
+    @Transactional
+    @Override
+    public List<Enrollment> getEnrollmentsForStudent(int id) {
+        return studentDAO.getEnrollmentsForStudent(id);
     }
 }

@@ -33,12 +33,14 @@ function displayStudents(message){
 }
 
 function displayEnrollments(jsonArray){
+    $('#studentTableInfo').show();
     let $studentInfo = $('#studentInfo');
     let $disciplines = $('#disciplines');
     let $disciplineHead = $('#disciplinesHead');
 
     let studentObj = jsonArray[0].student;
 
+    $disciplineHead.empty();
     $studentInfo.empty();
     $disciplines.empty();
 
